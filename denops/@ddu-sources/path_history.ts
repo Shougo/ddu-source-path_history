@@ -4,7 +4,11 @@ import {
   Item,
   TreePath,
 } from "https://deno.land/x/ddu_vim@v3.5.0/types.ts";
-import { Denops, pathsep, vars } from "https://deno.land/x/ddu_vim@v3.5.0/deps.ts";
+import {
+  Denops,
+  pathsep,
+  vars,
+} from "https://deno.land/x/ddu_vim@v3.5.0/deps.ts";
 import { ActionData } from "https://deno.land/x/ddu_kind_file@v0.5.3/file.ts";
 
 function convertTreePath(treePath: TreePath) {
@@ -33,8 +37,11 @@ export class Source extends BaseSource<Params> {
       async start(controller) {
         if (uiName != "") {
           const pathHistories = (await args.denops.call(
-            "ddu#get_context", uiName) as Context).pathHistories.map(
-            (path) => convertTreePath(path));
+            "ddu#get_context",
+            uiName,
+          ) as Context).pathHistories.map(
+            (path) => convertTreePath(path),
+          );
 
           controller.enqueue(pathHistories.map((h: string) => ({
             word: h,
