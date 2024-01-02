@@ -3,13 +3,13 @@ import {
   Context,
   Item,
   TreePath,
-} from "https://deno.land/x/ddu_vim@v3.5.0/types.ts";
+} from "https://deno.land/x/ddu_vim@v3.9.0/types.ts";
 import {
   Denops,
   pathsep,
   vars,
-} from "https://deno.land/x/ddu_vim@v3.5.0/deps.ts";
-import { ActionData } from "https://deno.land/x/ddu_kind_file@v0.5.3/file.ts";
+} from "https://deno.land/x/ddu_vim@v3.9.0/deps.ts";
+import { ActionData } from "https://deno.land/x/ddu_kind_file@v0.7.1/file.ts";
 
 function convertTreePath(treePath: TreePath) {
   return typeof treePath === "string" ? treePath : treePath.join(pathsep);
@@ -20,19 +20,19 @@ type Params = Record<string, never>;
 export class Source extends BaseSource<Params> {
   override kind = "file";
 
-  private uiName = "";
+  #uiName = "";
 
   override async onInit(args: {
     denops: Denops;
   }): Promise<void> {
-    this.uiName = await vars.b.get(args.denops, "ddu_ui_name", "");
+    this.#uiName = await vars.b.get(args.denops, "ddu_ui_name", "");
   }
 
   override gather(args: {
     denops: Denops;
     sourceParams: Params;
   }): ReadableStream<Item<ActionData>[]> {
-    const uiName = this.uiName;
+    const uiName = this.#uiName;
     return new ReadableStream({
       async start(controller) {
         if (uiName != "") {
