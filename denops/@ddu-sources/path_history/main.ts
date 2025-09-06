@@ -1,16 +1,12 @@
-import {
-  type Context,
-  type Item,
-  type TreePath,
-} from "jsr:@shougo/ddu-vim@~6.1.0/types";
-import { BaseSource } from "jsr:@shougo/ddu-vim@~6.1.0/source";
+import type { Context, Item, TreePath } from "@shougo/ddu-vim/types";
+import { BaseSource } from "@shougo/ddu-vim/source";
 
-import { type ActionData } from "jsr:@shougo/ddu-kind-file@~0.9.0";
+import type { ActionData } from "@shougo/ddu-kind-file";
 
-import type { Denops } from "jsr:@denops/core@~7.0.0";
-import * as vars from "jsr:@denops/std@~7.1.0/variable";
+import type { Denops } from "@denops/std";
+import * as vars from "@denops/std/variable";
 
-import { SEPARATOR as pathsep } from "jsr:@std/path@~1.0.2/constants";
+import { SEPARATOR as pathsep } from "@std/path/constants";
 
 function convertTreePath(treePath: TreePath) {
   return typeof treePath === "string" ? treePath : treePath.join(pathsep);
