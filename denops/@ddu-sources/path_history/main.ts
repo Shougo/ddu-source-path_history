@@ -32,21 +32,24 @@ export class Source extends BaseSource<Params> {
     const uiName = this.#uiName;
     return new ReadableStream({
       async start(controller) {
-        if (uiName != "") {
-          const pathHistories = (await args.denops.call(
-            "ddu#get_context",
-            uiName,
-          ) as Context).pathHistories.map(
-            (path) => convertTreePath(path),
-          );
-
-          controller.enqueue(pathHistories.map((h: string) => ({
-            word: h,
-            action: {
-              path: h,
-            },
-          })));
+        if (uiName === "") {
+          controller.close();
+          return;
         }
+
+        const pathHistories = (await args.denops.call(
+          "ddu#get_context",
+          uiName,
+        ) as Context).pathHistories.map(
+          (path) => convertTreePath(path),
+        );
+
+        controller.enqueue(pathHistories.map((h: string) => ({
+          word: h,
+          action: {
+            path: h,
+          },
+        })));
 
         controller.close();
       },
